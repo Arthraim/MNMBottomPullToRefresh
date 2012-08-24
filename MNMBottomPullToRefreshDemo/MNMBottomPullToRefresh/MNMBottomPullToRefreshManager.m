@@ -78,6 +78,8 @@
         table_ = [table retain];
         
         pullToRefreshView_ = [[MNMBottomPullToRefreshView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(table_.frame), height)];
+
+        originalInsets_ = [table contentInset];
     }
     
     return self;
@@ -179,11 +181,11 @@
                 
                 if (table_.contentSize.height >= table_.frame.size.height) {
                 
-                    table_.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, -height, 0.0f);
+                    table_.contentInset = UIEdgeInsetsMake(originalInsets_.top, originalInsets_.left, -height - originalInsets_.bottom, originalInsets_.right);
                     
                 } else {
                     
-                    table_.contentInset = UIEdgeInsetsMake(height, 0.0f, 0.0f, 0.0f);
+                    table_.contentInset = UIEdgeInsetsMake(height + originalInsets_.top, originalInsets_.left, originalInsets_.bottom, originalInsets_.right);
                 }
             }];
         }
@@ -195,7 +197,7 @@
  */
 - (void)tableViewReloadFinished {
     
-    table_.contentInset = UIEdgeInsetsZero;
+    table_.contentInset = originalInsets_;
     
     [self relocatePullToRefreshView];
         

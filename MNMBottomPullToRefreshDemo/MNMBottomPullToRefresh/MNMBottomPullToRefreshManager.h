@@ -81,6 +81,11 @@
      * Client object that observes changes
      */
     id<MNMBottomPullToRefreshManagerClient> client_;
+    
+    /**
+     * Cached Original TalbeView ContentInset
+     */
+    UIEdgeInsets originalInsets_;
 }
 
 /**
